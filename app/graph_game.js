@@ -11,6 +11,7 @@ module.exports = {
 
 function setStart(graph, startingVertex) {
     graph.currentNode = startingVertex;
+    graph.startNode = startingVertex;
     graph.visited.push(startingVertex);
 }
 
@@ -56,8 +57,9 @@ function play(graph, currentNodes, nextVertex) {
     var winning = currentNodes.slice();
     var previousNode = currentNodes.pop();
     var isEnd = getPath(graph, winning, previousNode);
-    if (!isEnd.length > 0 && winning.length % 2 === 1)
-        console.log(winning);
+    if (!isEnd.length > 0 && winning.length % 2 === 1){
+        graph.winning.push(winning);
+    }
 }
 
 

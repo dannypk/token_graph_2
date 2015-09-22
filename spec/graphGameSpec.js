@@ -183,7 +183,8 @@ describe("Testing the algorithm", function () {
             },
             visited: [],
             currentNode: -1,
-            isWinning: false
+            winning: [],
+            startNode: -1
         };
     });
 
@@ -192,9 +193,10 @@ describe("Testing the algorithm", function () {
             game.setStart(graph, 1);
             console.log("winning solutions for node 1:");
             game.play(graph);
+            console.log(graph.winning);
         });
-        it("should return all the winning paths but instead it logs them..", function () {
-            expect(1).toBe(1);
+        it("should return 2 possible winning paths", function () {
+            expect(graph.winning.length).toBe(2);
         })
     });
 
@@ -203,20 +205,22 @@ describe("Testing the algorithm", function () {
             game.setStart(graph, 2);
             console.log("winning solutions for node 2:");
             game.play(graph);
+            console.log(graph.winning);
         });
-        it("should return all the winning paths but instead it logs them..", function () {
-            expect(1).toBe(1);
+        it("should return a winning path [2,4,6]", function () {
+            expect(graph.winning).toEqual([[2, 4, 6]]);
         })
-    })
+    });
 
     describe("Testing for starting node 3", function () {
         beforeEach(function () {
             game.setStart(graph, 3);
             console.log("winning solutions for node 3:");
             game.play(graph);
+            console.log(graph.winning);
         });
-        it("should return all the winning paths but instead it logs them..", function () {
-            expect(1).toBe(1);
+        it("should return 3 possible winning paths", function () {
+            expect(graph.winning.length).toBe(2);
         })
     })
 });
