@@ -3,36 +3,11 @@
  */
 module.exports = {
     setStart: setStart,
-    canMove: canMove,
-    move: move,
-    play: play,
-    goBack: goBack
+    play: play
 };
 
 function setStart(graph, startingVertex) {
     graph.currentNode = startingVertex;
-    graph.startNode = startingVertex;
-    graph.visited.push(startingVertex);
-}
-
-function canMove(graph) {
-    var hasAvailablePath = graph.nodes[graph.currentNode].filter(function (node) {
-        return graph.visited.indexOf(node) < 0;
-    });
-    return hasAvailablePath.length > 0;
-}
-
-function move(graph, nextVertex) {
-    if (canMove(graph, nextVertex)) {
-        graph.currentNode = nextVertex;
-        graph.visited.push(nextVertex);
-        graph.isWinning = !graph.isWinning;
-    }
-}
-
-function goBack(path) {
-    path.pop();
-    return path;
 }
 
 function getPath(graph, currentNodes, currentVertex) {
@@ -41,58 +16,28 @@ function getPath(graph, currentNodes, currentVertex) {
     });
 }
 
-function play(graph, currentNodes, nextVertex) {
-    currentNodes = currentNodes || [];
-    currentVertex = nextVertex || graph.currentNode;
-    currentNodes.push(currentVertex);
+function play(graph, visitedNodes, currentNode) {
+    var winning, previousNode, isEnd;
 
-    var paths = getPath(graph, currentNodes, currentVertex);
+    currentNode = currentNode || graph.currentNode;
+    visitedNodes = visitedNodes || [];
+    visitedNodes.push(currentNode);
+
+    var paths = getPath(graph, visitedNodes, currentNode);
 
     if (paths.length > 0) {
         for (var path in paths) {
-            play(graph, currentNodes, paths[path]);
+            if (paths.hasOwnProperty(path))
+                play(graph, visitedNodes, paths[path]);
         }
     }
 
-    var winning = currentNodes.slice();
-    var previousNode = currentNodes.pop();
-    var isEnd = getPath(graph, winning, previousNode);
-    if (!isEnd.length > 0 && winning.length % 2 === 1){
+    winning = visitedNodes.slice();
+    previousNode = visitedNodes.pop();
+
+    isEnd = getPath(graph, winning, previousNode);
+
+    if (!isEnd.length > 0 && winning.length % 2 === 1) {
         graph.winning.push(winning);
     }
 }
-
-
-/*
- function play(graph, path, nextVertex) {
- path = path || [];
- var currentNode = nextVertex || graph.currentNode;
- while (canMove(graph)) {
- for (var neighbour in graph.nodes[graph.currentNode]) {
- path.push(graph.currentNode);
- play(graph, path, neighbour);
- }
- }
- if(graph.isWinning)   return path;
- else return false;
- }*/
-
-/*
- function play(graph, currentNodes, nextVertex) {
- currentNodes = currentNodes || [];
- currentVertex = nextVertex || graph.currentNode;
- currentNodes.push(currentVertex);
-
- var paths = canMove(graph);
-
- if (paths.length > 0) {
- for (var path in paths) {
- if (currentNodes.indexOf(paths[path]) === -1)
- play(graph, currentNodes, paths[path]);
- }
- }
-
- console.log(currentNodes);
- return currentNodes;
- }
- */
