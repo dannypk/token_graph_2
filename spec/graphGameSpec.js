@@ -17,37 +17,44 @@ describe("Given we have a small loosing board", function () {
     });
 
     describe("when player sets the starting vertex", function () {
-        var startingVertex;
+        var startingNode, currentNode, winningPath, winningPathLength;
         beforeEach(function () {
-            startingVertex = 1;
-            game.setStart(graph, startingVertex);
+            startingNode = 1;
+            game.setStart(graph, startingNode);
+            currentNode = graph.currentNode;
         });
 
         it("current node should be equals to 1", function () {
-            expect(graph.currentNode).toBe(1);
+            expect(currentNode).toBe(1);
         });
 
         describe("Testing for starting node 1", function () {
             beforeEach(function () {
-                game.setStart(graph, 1);
-                console.log("winning solutions for node 1:");
+                startingNode = 1;
+
+                game.setStart(graph, startingNode);
                 game.play(graph);
-                console.log(graph.winning);
+
+                winningPathLength = graph.winning.length;
             });
+
             it("should return no possible winning paths", function () {
-                expect(graph.winning.length).toBe(0);
+                expect(winningPathLength).toBe(0);
             })
         });
 
         describe("Testing for starting node 2", function () {
             beforeEach(function () {
-                game.setStart(graph, 2);
-                console.log("winning solutions for node 2:");
+                startingNode = 2;
+
+                game.setStart(graph, startingNode);
                 game.play(graph);
-                console.log(graph.winning);
+
+                winningPathLength = graph.winning.length;
             });
+
             it("should return no possible winning paths", function () {
-                expect(graph.winning.length).toBe(0);
+                expect(winningPathLength).toBe(0);
             })
         });
 
@@ -59,22 +66,28 @@ describe("Given we have a small loosing board", function () {
 
             describe("Testing for starting node 1", function () {
                 beforeEach(function () {
-                    game.setStart(graph, 1);
-                    console.log("winning solutions for node 1:");
+                    startingNode = 1;
+                    game.setStart(graph, startingNode);
                     game.play(graph);
-                    console.log(graph.winning);
+
+                    winningPath = graph.winning;
+                    winningPathLength = winningPath.length;
                 });
 
                 it("should return 1 winning solution", function () {
-                    expect(graph.winning.length).toBe(1);
+                    console.log("winning solutions for node 1:" + JSON.stringify(winningPath));
+                    expect(winningPathLength).toBe(1);
+                });
+
+                it("should return [[1,2,3]] as the winning solution", function () {
+                    expect(winningPath).toEqual([[1, 2, 3]]);
                 })
             });
             describe("Testing for starting node 2", function () {
                 beforeEach(function () {
-                    game.setStart(graph, 2);
-                    console.log("winning solutions for node 1:");
+                    startingNode = 2;
+                    game.setStart(graph, startingNode);
                     game.play(graph);
-                    console.log(graph.winning);
                 });
 
                 it("should return no possible winning paths", function () {
@@ -86,7 +99,7 @@ describe("Given we have a small loosing board", function () {
 });
 
 describe("Given we have a bigger game board with more possibilities", function () {
-    var graph;
+    var graph, winningPath, winningPathLength;
 
     beforeEach(function () {
         graph = {
@@ -105,38 +118,57 @@ describe("Given we have a bigger game board with more possibilities", function (
     });
 
     describe("Testing for starting node 1", function () {
+        var startingNode;
         beforeEach(function () {
-            game.setStart(graph, 1);
-            console.log("winning solutions for node 1:");
+            startingNode = 1;
+
+            game.setStart(graph, startingNode);
             game.play(graph);
-            console.log(graph.winning);
+
+            winningPath = graph.winning;
+            winningPathLength = winningPath.length;
+
+            console.log("winning solutions for node 1:" + JSON.stringify(winningPath));
         });
+
         it("should return 2 possible winning paths", function () {
-            expect(graph.winning.length).toBe(2);
+            expect(winningPathLength).toBe(2);
         })
     });
 
     describe("Testing for starting node 2", function () {
         beforeEach(function () {
-            game.setStart(graph, 2);
-            console.log("winning solutions for node 2:");
+            startingNode = 2;
+
+            game.setStart(graph, startingNode);
             game.play(graph);
-            console.log(graph.winning);
+
+            winningPath = graph.winning;
+
+            console.log("winning solutions for node 2:" + JSON.stringify(winningPath));
         });
+
         it("should return a winning path [2,4,6]", function () {
-            expect(graph.winning).toEqual([[2, 4, 6]]);
+            expect(winningPath).toEqual([[2, 4, 6]]);
         })
     });
 
     describe("Testing for starting node 3", function () {
         beforeEach(function () {
-            game.setStart(graph, 3);
-            console.log("winning solutions for node 3:");
+            startingNode = 3;
+
+            game.setStart(graph, startingNode);
             game.play(graph);
-            console.log(graph.winning);
+
+            winningPath = graph.winning;
+            winningPathLength = winningPath.length;
+
+            console.log("winning solutions for node 3:" + JSON.stringify(winningPath));
+
         });
+
         it("should return 3 possible winning paths", function () {
-            expect(graph.winning.length).toBe(2);
+            expect(winningPathLength).toBe(2);
         })
     })
 });

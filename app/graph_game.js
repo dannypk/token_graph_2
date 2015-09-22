@@ -6,8 +6,8 @@ module.exports = {
     play: play
 };
 
-function setStart(graph, startingVertex) {
-    graph.currentNode = startingVertex;
+function setStart(graph, startingNode) {
+    graph.currentNode = startingNode;
 }
 
 function getPath(graph, currentNodes, currentVertex) {
@@ -17,13 +17,13 @@ function getPath(graph, currentNodes, currentVertex) {
 }
 
 function play(graph, visitedNodes, currentNode) {
-    var winning, previousNode, isEnd;
+    var winning, previousNode, isEnd, paths;
 
     currentNode = currentNode || graph.currentNode;
     visitedNodes = visitedNodes || [];
     visitedNodes.push(currentNode);
 
-    var paths = getPath(graph, visitedNodes, currentNode);
+    paths = getPath(graph, visitedNodes, currentNode);
 
     if (paths.length > 0) {
         for (var path in paths) {
