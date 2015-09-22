@@ -82,9 +82,9 @@ describe("Given we have a graph", function () {
             it("should go back 1 step", function () {
                 expect(newPath).toEqual([1, 2, 3]);
             })
+
+
         });
-
-
     });
 });
 
@@ -167,3 +167,56 @@ describe("Given we have a 2nd graph", function () {
     })
 });
 
+describe("Testing the algorithm", function () {
+    var graph;
+
+    beforeEach(function () {
+        graph = {
+            nodes: {
+                1: [2],
+                2: [1, 3, 4],
+                3: [2],
+                4: [2, 5, 6],
+                5: [4, 7],
+                6: [4],
+                7: [5]
+            },
+            visited: [],
+            currentNode: -1,
+            isWinning: false
+        };
+    });
+
+    describe("Testing for starting node 1", function () {
+        beforeEach(function () {
+            game.setStart(graph, 1);
+            console.log("winning solutions for node 1:");
+            game.play(graph);
+        });
+        it("should return all the winning paths but instead it logs them..", function () {
+            expect(1).toBe(1);
+        })
+    });
+
+    describe("Testing for starting node 2", function () {
+        beforeEach(function () {
+            game.setStart(graph, 2);
+            console.log("winning solutions for node 2:");
+            game.play(graph);
+        });
+        it("should return all the winning paths but instead it logs them..", function () {
+            expect(1).toBe(1);
+        })
+    })
+
+    describe("Testing for starting node 3", function () {
+        beforeEach(function () {
+            game.setStart(graph, 3);
+            console.log("winning solutions for node 3:");
+            game.play(graph);
+        });
+        it("should return all the winning paths but instead it logs them..", function () {
+            expect(1).toBe(1);
+        })
+    })
+});
