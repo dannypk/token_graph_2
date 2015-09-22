@@ -60,13 +60,15 @@ describe("Given we have a graph", function () {
         });
 
         describe("when we reach the end of possibilities", function () {
-            var canMove, path;
+            var canMove, path, newPath;
             beforeEach(function () {
                 graph.visited = [1, 2, 3, 4];
                 graph.currentNode = 4;
 
                 canMove = game.canMove(graph);
                 path = graph.visited;
+
+                newPath = game.goBack(path.slice());
             });
 
             it("should not be able to move", function () {
@@ -75,6 +77,10 @@ describe("Given we have a graph", function () {
 
             it("should return the traversed path", function () {
                 expect(path).toEqual([1, 2, 3, 4]);
+            });
+
+            it("should go back 1 step", function () {
+                expect(newPath).toEqual([1, 2, 3]);
             })
         });
 
@@ -82,7 +88,7 @@ describe("Given we have a graph", function () {
     });
 });
 
-describe("Given we have a complicated graph", function () {
+describe("Given we have a 2nd graph", function () {
     var graph;
 
     beforeEach(function () {
@@ -159,39 +165,5 @@ describe("Given we have a complicated graph", function () {
             });
         });
     })
-});
-
-describe("Given we have a complicated graph", function () {
-    var graph;
-
-    beforeEach(function () {
-        graph = {
-            nodes: {
-                1: [2],
-                2: [1, 3, 4],
-                3: [2],
-                4: [2, 5, 6]
-            },
-            visited: [],
-            currentNode: -1,
-            isWinning: false
-        };
-    });
-
-    describe("then we calculate for all node the possible path", function () {
-        describe("we start with one", function () {
-            var path;
-            beforeEach(function () {
-                game.setStart(graph, 1);
-                path = game.play(graph);
-            });
-
-            it("should return path 1,2,3 as a winning path", function () {
-                expect(path).toEqual([1, 2, 3]);
-            })
-
-        });
-    })
-
 });
 

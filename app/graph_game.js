@@ -5,7 +5,8 @@ module.exports = {
     setStart: setStart,
     canMove: canMove,
     move: move,
-    play: play
+    play: play,
+    goBack: goBack
 };
 
 function setStart(graph, startingVertex) {
@@ -28,8 +29,13 @@ function move(graph, nextVertex) {
     }
 }
 
+function goBack(path) {
+    path.pop();
+    return path;
+}
+
 function play(){
-    return [1,2,3];
+
 }
 /*
 function play(graph, path, nextVertex) {
@@ -44,3 +50,23 @@ function play(graph, path, nextVertex) {
     if(graph.isWinning)   return path;
     else return false;
 }*/
+
+/*
+ function play(graph, currentNodes, nextVertex) {
+ currentNodes = currentNodes || [];
+ currentVertex = nextVertex || graph.currentNode;
+ currentNodes.push(currentVertex);
+
+ var paths = canMove(graph);
+
+ if (paths.length > 0) {
+ for (var path in paths) {
+ if (currentNodes.indexOf(paths[path]) === -1)
+ play(graph, currentNodes, paths[path]);
+ }
+ }
+
+ console.log(currentNodes);
+ return currentNodes;
+ }
+ */
